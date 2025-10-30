@@ -1,0 +1,11 @@
+# Ignore Python virtual environments
+venv/
+__pycache__/
+*.pyc
+
+# Ignore large ML/cache folders
+*.pyd
+*.dll
+*.so
+*.h5
+*.ckpt
