@@ -19,6 +19,72 @@ EMOTIONS = ["Angry","Disgust","Fear","Happy","Sad","Surprise","Neutral",
 def index():
     return render_template("index.html")
 
+@app.route("/howitworks")
+def howitworks():
+    return render_template("howitworks.html")
+
+# @app.route("/learnmore")
+# def learnmore():
+#     return render_template("learnmore.html")
+
+@app.route("/counselors")
+def counselors():
+    return render_template("ourcounclers.html")
+
+@app.route("/chat.html")
+def chatpage():
+    return render_template("chat.html")
+
+@app.route("/facecam.html")
+def facecam():
+    return render_template("facecam.html")
+
+@app.route("/checkout")
+def checkout():
+    return render_template("checkout.html")
+
+# @app.route("/log")
+# def log():
+#     return render_template("log.html")
+
+# @app.route("/plan")
+# def plan():
+#     return render_template("plan.html")
+
+@app.route("/emily.html")
+def emily():
+    return render_template("emily.html")
+
+@app.route("/jane.html")
+def jane():
+    return render_template("jane.html")
+
+@app.route("/john.html")
+def john():
+    return render_template("john.html")
+
+@app.route("/learnmore.html")
+def learnmore():
+    return render_template("learnmore.html")
+
+
+@app.route("/log.html")
+def log():
+    return render_template("log.html")
+
+@app.route("/ourcounclers.html")
+def ourcounclers():
+    return render_template("ourcounclers.html")
+
+@app.route("/plan.html")
+def plan():
+    return render_template("plan.html")
+
+@app.route("/signup.html")
+def signup():
+    return render_template("signup.html")
+
+
 @app.route("/predict", methods=["POST"])
 def predict():
     # Expecting JSON with a Base64 image string under key "image"

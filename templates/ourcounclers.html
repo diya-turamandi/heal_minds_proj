@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+    <style>
+        /* Counselor Cards */
+#counselors {
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+#counselors h2 {
+  font-size: 2.5rem;
+  color: #3E4A3F;
+  margin-bottom: 2rem;
+}
+
+.counselor-cards {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: linear-gradient(145deg, #A8C8A0, #F9F3E0);
+  color: #3E4A3F;
+  border-radius: 10px;
+  width: 280px;
+  padding: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+  border-radius: 10%;
+  margin-bottom: 1rem;
+}
+
+.card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.card p {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.card .cta-button {
+  background-color: #A65E2E;
+  color: #E8F1E5;
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.card .cta-button:hover {
+  background-color: #D68A3D;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+    </style>
+    <body>
+   <nav>
+        <div class="logo">Heal Minds</div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+          <a href="howitworks.html">How It Works</a>
+          <a href="plan.html">Plans & Pricing</a>
+          <a href="ourcounclers.html">Our Counselors</a>
+          <a href="log.html">Login</a>
+        </div>
+      </nav>
+    <section id="counselors">
+        <h2>Meet Our Counselors</h2>
+        <div class="counselor-cards">
+          <div class="card">
+            <img src="jane.avif" alt="Dr. Jane Smith">
+            <h3>Dr. Jane Smith</h3>
+            <p>Specializes in anxiety and depression with over 10 years of experience.</p>
+            <a href="jane.html"><button class="cta-button">Book a Session</button></a>
+          </div>
+          <div class="card">
+            <img src="john.jpg" alt="Mr. John Doe" style="height: 220px;">
+            <h3>Mr. John Doe</h3>
+            <p>PTSD & Trauma Therapy with over 10 years of experience.</p>
+            <a href="john.html"><button class="cta-button">Book a Session</button></a>
+          </div>
+          <div class="card">
+            <img src="emily.jpg" alt="Ms. Emily Johnson">
+            <h3>Ms. Emily Johnson</h3>
+            <p>Focuses on stress management and mindfulness techniques.</p>
+            <a href="emily.html"><button class="cta-button">Book a Session</button></a>
+          </div>
+        </div>
+      </section>
+      
+    
+</body>
+</html>

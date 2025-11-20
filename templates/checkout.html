@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout - Heal Minds</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background: linear-gradient(to bottom, #D1E0C5, #E8F1E5);
+      color: #3E4A3F;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: #A8C8A0;
+    }
+
+    .logo {
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+
+    .nav-links a {
+      margin-left: 1rem;
+      text-decoration: none;
+      color: #3E4A3F;
+    }
+
+    .checkout-container {
+      max-width: 600px;
+      margin: 3rem auto;
+      background: linear-gradient(145deg, #A8C8A0, #F9F3E0);
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .plan-summary {
+      background-color: #E8F1E5;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      font-weight: bold;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .cta-button {
+      background-color: #A65E2E;
+      color: #E8F1E5;
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+      width: 100%;
+    }
+
+    .cta-button:hover {
+      background-color: #D68A3D;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #A8C8A0;
+      color: #3E4A3F;
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <div class="logo">Heal Minds</div>
+    <div class="nav-links">
+      <a href="howitworks.html">How It Works</a>
+      <a href="plans.html">Plans & Pricing</a>
+      <a href="ourcounclers.html">Our Counselors</a>
+      <a href="log.html">Login</a>
+    </div>
+  </nav>
+
+  <div class="checkout-container">
+    <h2>Checkout</h2>
+    <div class="plan-summary" id="plan-name">
+      Selected Plan: Loading...
+    </div>
+
+    <form id="billing-form">
+      <label for="fullname">Full Name</label>
+      <input type="text" id="fullname" name="fullname" required>
+
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone" required>
+
+      <!-- Replace this with your actual payment integration -->
+      <button type="button" class="cta-button" onclick="startPayment()">Proceed to Pay</button>
+    </form>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Heal Minds. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Get plan from URL or localStorage
+    const queryParams = new URLSearchParams(window.location.search);
+    const planFromUrl = queryParams.get("plan");
+    const plan = planFromUrl || localStorage.getItem("selectedPlan") || "Basic";
+
+    document.getElementById("plan-name").innerText = `Selected Plan: ${plan.charAt(0).toUpperCase() + plan.slice(1)} Plan`;
+
+    function startPayment() {
+      alert("Payment gateway integration goes here (e.g., Razorpay, Stripe)");
+      // You would actually integrate Razorpay or any provider here
+    }
+  </script>
+
+</body>
+</html>

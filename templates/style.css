@@ -1,0 +1,79 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+  }
+  
+  body {
+    background: linear-gradient(to bottom, #D1E0C5, #E8F1E5); /* Soft nature gradient */
+    color: #326d37; /* Deep green for text */
+    line-height: 1.6;
+  }
+  
+  /* Navigation Bar */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #6e72a9; /* Warm earthy brown */
+    padding: 1rem 2rem;
+  }
+  
+  nav .logo {
+    color: #E8F1E5; /* Light cream */
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  nav .nav-links a {
+    color: #E8F1E5;
+    text-decoration: none;
+    margin-left: 2rem;
+    font-size: 16px;
+  }
+  
+  nav .nav-links a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Hero Section */
+  .hero {
+    background: linear-gradient(to bottom, #A8C8A0, #F9F3E0); /* Soft nature gradient */
+    color: #294c2c;
+    text-align: center;
+    padding: 5rem 2rem;
+  }
+  
+  .hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+  
+  .hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .hero .cta-button {
+    background-color: #454043 /* Autumn Harvest */
+    color: #E8F1E5;
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  .hero .cta-button:hover {
+    background-color: #5E7B9C /* Lighter autumn tone */
+  }
+  
+  /* Footer */
+  footer {
+    background-color: #60C8C8 /* Warm earthy brown */
+    color: #E8F1E5;
+    text-align: center;
+    padding: 1rem;
+  }

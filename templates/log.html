@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - Heal Minds</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to bottom, #d6eaf8, #ebf5fb);
+      color: #2e4053;
+      line-height: 1.6;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #2874a6;
+      padding: 1rem 2rem;
+    }
+
+    nav .logo {
+      color: #fdfefe;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    nav .nav-links a {
+      color: #fdfefe;
+      text-decoration: none;
+      margin-left: 2rem;
+      font-size: 16px;
+    }
+
+    nav .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    #login {
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    #login h2 {
+      font-size: 2.5rem;
+      color: #1b2631;
+      margin-bottom: 2rem;
+    }
+
+    form {
+      background: linear-gradient(145deg, #aed6f1, #ebf5fb);
+      color: #1b2631;
+      border-radius: 10px;
+      padding: 2rem;
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+      text-align: left;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .cta-button {
+      background-color: #2874a6;
+      color: #fdfefe;
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background-color: #3498db;
+    }
+
+    .signup-link {
+      margin-top: 1rem;
+      display: block;
+      font-size: 0.95rem;
+      color: #2874a6;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+        <div class="logo">Heal Minds</div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+          <a href="howitworks.html">How It Works</a>
+          <a href="plan.html">Plans & Pricing</a>
+          <a href="ourcounclers.html">Our Counselors</a>
+          <a href="log.html">Login</a>
+        </div>
+      </nav>
+
+  <section id="login">
+    <h2>Login</h2>
+    <form id="login-form">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+
+      <button type="submit" class="cta-button">Login</button>
+      <a class="signup-link" href="signup.html">Don't have an account? Sign up</a>
+    </form>
+  </section>
+
+  <script>
+    document.getElementById("login-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      const storedEmail = localStorage.getItem("userEmail");
+      const storedPassword = localStorage.getItem("userPassword");
+
+      if (email === storedEmail && password === storedPassword) {
+        alert("Login successful!");
+        window.location.href = "index.html";
+      } else {
+        alert("Invalid email or password.");
+      }
+    });
+  </script>
+
+</body>
+</html>
