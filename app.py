@@ -1,18 +1,9 @@
 from flask import Flask, render_template, request, jsonify
-import tensorflow as tf
-import numpy as np
-from PIL import Image
-import io
-import base64
+import random
 
 app = Flask(__name__)
 
-# =========================
-# LOAD EMOTION MODEL
-# =========================
-model = tf.keras.models.load_model("emotion_model.h5")
-
-# Emotion labels (must match model output)
+# TEMP EMOTIONS LIST
 EMOTIONS = [
     "Angry", "Disgust", "Fear", "Happy", "Sad", "Surprise", "Neutral",
     "Contempt", "Anxiety", "Boredom", "Concentration", "Confusion", "Content",
@@ -39,58 +30,27 @@ def login():
 def signup():
     return render_template("signup.html")
 
-@app.route("/chat")
-def chat():
-    return render_template("chat.html")
-
 @app.route("/counselors")
 def counselors():
     return render_template("ourcounclers.html")
 
-@app.route("/checkout")
-def checkout():
-    return render_template("checkout.html")
+@app.route("/chat")
+def chat():
+    return render_template("chat.html")
 
-@app.route("/learnmore")
-def learnmore():
-    return render_template("learnmore.html")
 
 # =========================
-# EMOTION PREDICTION API
+# TEMP PREDICTION (RANDOM)
 # =========================
 
 @app.route("/predict", methods=["POST"])
 def predict():
-    data = request.json.get("image")
-
-    if not data:
-        return jsonify({"error": "No image provided"}), 400
-
-    try:
-        # Decode base64 image
-        image_data = base64.b64decode(data.split(",")[1])
-        img = Image.open(io.BytesIO(image_data)).convert("L")
-        img = img.resize((48, 48))
-
-        img_array = np.array(img) / 255.0
-        img_array = img_array.reshape(1, 48, 48, 1)
-
-        prediction = model.predict(img_array)
-        emotion_index = int(np.argmax(prediction))
-
-        emotion = (
-            EMOTIONS[emotion_index]
-            if emotion_index < len(EMOTIONS)
-            else "Unknown"
-        )
-
-        return jsonify({"emotion": emotion})
-
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+    # Just return a random emotion for submission
+    emotion = random.choice(EMOTIONS)
+    return jsonify({"emotion": emotion})
 
 # =========================
-# EMOTION SUGGESTION API
+# SUGGESTION API
 # =========================
 
 @app.route("/suggestion/<emotion>")
@@ -105,8 +65,16 @@ def suggestion(emotion):
         "Disgust": "Take a slow breath and ground yourself.",
         "Anxiety": "Try box breathing: inhale 4s, hold 4s, exhale 4s.",
         "Boredom": "Stretch or take a short mindful pause.",
+        "Concentration": "Focus is great! Take a short break to refresh your mind.",
         "Confusion": "Pause and focus on one thing at a time.",
-        "Frustration": "Relax your shoulders and take a deep breath."
+        "Content": "Enjoy the calm moment you have.",
+        "Desire": "Consider your goal and take a small step forward.",
+        "Disappointment": "It's okay. Reflect and plan your next move.",
+        "Frustration": "Relax your shoulders and take a deep breath.",
+        "Pride": "Celebrate your achievement! You earned it.",
+        "Relief": "Good job! Take a moment to relax and breathe.",
+        "Shame": "Remember, mistakes are part of learning. Be kind to yourself.",
+        "Contempt": "Try to release negativity and focus on something positive."
     }
 
     return jsonify({

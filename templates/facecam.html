@@ -6,10 +6,9 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <style>
     body {
-      background: linear-gradient(to bottom, #9c83d2, #9a999b);
+      background: linear-gradient(to bottom, #a28dcf, #9a999b);
       color: #2c3e50;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      line-height: 1.6;
       text-align: center;
       padding: 2rem;
     }
@@ -20,60 +19,158 @@
       background-color: #352577;
       padding: 1rem 2rem;
     }
+    nav .logo { color: #fdfefe; font-size: 24px; font-weight: bold; }
+    nav .nav-links a { color: #fdfefe; text-decoration: none; margin-left: 2rem; }
+    nav .nav-links a:hover { text-decoration: underline; }
 
-    nav .logo {
-      color: #fdfefe;
-      font-size: 24px;
-      font-weight: bold;
+    /* Suggestion Modal Styles */
+    #suggestionModal {
+      display: none;
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgb(206, 194, 210);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+      z-index: 1000;
+      width: 300px;
+      text-align: center;
+    }
+    #modalOverlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+    }
+    #suggestionModal button {
+      margin-top: 10px;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #352577;
+      color: white;
     }
 
-    nav .nav-links a {
-      color: #fdfefe;
-      text-decoration: none;
-      margin-left: 2rem;
-      font-size: 16px;
+    /* Feelings Modal Styles */
+    #feelingsModal {
+      display: none;
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgb(206, 194, 210);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+      z-index: 1001;
+      width: 350px;
+      text-align: center;
     }
-
-    nav .nav-links a:hover {
-      text-decoration: underline;
+    #feelingsModal textarea {
+      width: 90%;
+      margin-top: 10px;
+      padding: 5px;
+    }
+    #feelingsModal button {
+      margin-top: 10px;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #352577;
+      color: white;
+      margin-right: 5px;
     }
   </style>
 </head>
-
 <body>
-<!-- NAV BAR -->
+  <!-- NAVIGATION -->
   <nav>
     <div class="logo">Heal Minds</div>
     <div class="nav-links">
-      <a href="/">Home</a>
+      <a href="{{ url_for('index') }}">Home</a>
+      <a href="{{ url_for('login') }}">Login</a>
     </div>
   </nav>
+
   <h1>Heal Minds - Emotion Detection</h1>
 
+  <!-- Webcam -->
   <div class="video-container">
     <video id="video" autoplay playsinline width="320" height="240"></video>
     <canvas id="canvas" width="224" height="224" style="display:none;"></canvas>
   </div>
-
   <button id="detectBtn">Detect Emotion</button>
-
   <h2 id="result">Emotion: ...</h2>
 
-  <!-- ✅ NEW: hidden emotion value -->
-  <input type="hidden" id="emotionValue" value="">
+  <!-- Suggestion Modal -->
+  <div id="suggestionModal">
+    <h3>💙 HealMinds Tip 💙</h3>
+    <p id="emotionName"></p> <!-- Display detected emotion -->
+    <p id="suggestionText"></p>
+    <button id="writeFeelingBtn">Write How You Feel</button>
+    <button onclick="closeModal()">Close</button>
+  </div>
 
+  <!-- Overlay -->
+  <div id="modalOverlay" onclick="closeModal()"></div>
+
+  <!-- Feelings Modal -->
+  <div id="feelingsModal">
+    <h3>📝 Share Your Thoughts</h3>
+    <p id="feelEmotionName"></p> <!-- Show detected emotion -->
+    <textarea id="userFeeling" rows="5" cols="30" placeholder="Write how you feel about this emotion..."></textarea>
+    <br>
+    <button onclick="submitFeeling()">Submit</button>
+    <button onclick="closeFeelingsModal()">Cancel</button>
+  </div>
+
+  <!-- SCRIPT -->
   <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-
-  <!-- ✅ NEW: popup logic -->
   <script>
+    // Show suggestion modal
     function showSuggestionPopup(emotion) {
       fetch(`/suggestion/${emotion}`)
         .then(response => response.json())
         .then(data => {
-          alert("💙 HealMinds Self-Care Tip 💙\n\n" + data.suggestion);
+          document.getElementById("emotionName").textContent = "Detected Emotion: " + emotion;
+          document.getElementById("suggestionText").textContent = data.suggestion;
+          document.getElementById("suggestionModal").style.display = "block";
+          document.getElementById("modalOverlay").style.display = "block";
         });
     }
-  </script>
 
+    function closeModal() {
+      document.getElementById("suggestionModal").style.display = "none";
+      document.getElementById("modalOverlay").style.display = "none";
+    }
+
+    // Feelings modal functions
+    const writeBtn = document.getElementById("writeFeelingBtn");
+    writeBtn.addEventListener("click", () => {
+      document.getElementById("feelEmotionName").textContent = "Emotion: " + document.getElementById("emotionName").textContent.replace("Detected Emotion: ", "");
+      document.getElementById("feelingsModal").style.display = "block";
+    });
+
+    function closeFeelingsModal() {
+      document.getElementById("feelingsModal").style.display = "none";
+    }
+
+    function submitFeeling() {
+      const feelingText = document.getElementById("userFeeling").value;
+      if(feelingText.trim() === "") {
+        alert("Please write something before submitting.");
+        return;
+      }
+      console.log("User feeling submitted:", feelingText); // Can later send to server
+      alert("Thank you for sharing your feelings!");
+      document.getElementById("userFeeling").value = ""; // clear textarea
+      closeFeelingsModal();
+      closeModal();
+    }
+  </script>
 </body>
 </html>
