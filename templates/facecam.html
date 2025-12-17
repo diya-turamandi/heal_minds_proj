@@ -4,8 +4,50 @@
   <meta charset="UTF-8" />
   <title>Heal Minds - Emotion Detection</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    body {
+      background: linear-gradient(to bottom, #9c83d2, #9a999b);
+      color: #2c3e50;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      text-align: center;
+      padding: 2rem;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #352577;
+      padding: 1rem 2rem;
+    }
+
+    nav .logo {
+      color: #fdfefe;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    nav .nav-links a {
+      color: #fdfefe;
+      text-decoration: none;
+      margin-left: 2rem;
+      font-size: 16px;
+    }
+
+    nav .nav-links a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
+
 <body>
+<!-- NAV BAR -->
+  <nav>
+    <div class="logo">Heal Minds</div>
+    <div class="nav-links">
+      <a href="/">Home</a>
+    </div>
+  </nav>
   <h1>Heal Minds - Emotion Detection</h1>
 
   <div class="video-container">
@@ -14,8 +56,24 @@
   </div>
 
   <button id="detectBtn">Detect Emotion</button>
+
   <h2 id="result">Emotion: ...</h2>
 
+  <!-- ✅ NEW: hidden emotion value -->
+  <input type="hidden" id="emotionValue" value="">
+
   <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+  <!-- ✅ NEW: popup logic -->
+  <script>
+    function showSuggestionPopup(emotion) {
+      fetch(`/suggestion/${emotion}`)
+        .then(response => response.json())
+        .then(data => {
+          alert("💙 HealMinds Self-Care Tip 💙\n\n" + data.suggestion);
+        });
+    }
+  </script>
+
 </body>
 </html>

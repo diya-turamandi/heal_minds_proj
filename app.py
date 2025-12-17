@@ -7,104 +7,118 @@ import base64
 
 app = Flask(__name__)
 
-# Load your emotion detection model (make sure emotion_model.h5 is in the same folder)
+# =========================
+# LOAD EMOTION MODEL
+# =========================
 model = tf.keras.models.load_model("emotion_model.h5")
 
-# Example labels — replace with your model's labels if different
-EMOTIONS = ["Angry","Disgust","Fear","Happy","Sad","Surprise","Neutral",
-            "Contempt","Anxiety","Boredom","Concentration","Confusion","Content",
-            "Desire","Disappointment","Frustration","Pride","Relief","Shame"]
+# Emotion labels (must match model output)
+EMOTIONS = [
+    "Angry", "Disgust", "Fear", "Happy", "Sad", "Surprise", "Neutral",
+    "Contempt", "Anxiety", "Boredom", "Concentration", "Confusion", "Content",
+    "Desire", "Disappointment", "Frustration", "Pride", "Relief", "Shame"
+]
+
+# =========================
+# PAGE ROUTES
+# =========================
 
 @app.route("/")
 def index():
     return render_template("index.html")
 
-@app.route("/howitworks")
-def howitworks():
-    return render_template("howitworks.html")
+@app.route("/facecam")
+def facecam():
+    return render_template("facecam.html")
 
-# @app.route("/learnmore")
-# def learnmore():
-#     return render_template("learnmore.html")
+@app.route("/login")
+def login():
+    return render_template("log.html")
+
+@app.route("/signup")
+def signup():
+    return render_template("signup.html")
+
+@app.route("/chat")
+def chat():
+    return render_template("chat.html")
 
 @app.route("/counselors")
 def counselors():
     return render_template("ourcounclers.html")
 
-@app.route("/chat.html")
-def chatpage():
-    return render_template("chat.html")
-
-@app.route("/facecam.html")
-def facecam():
-    return render_template("facecam.html")
-
 @app.route("/checkout")
 def checkout():
     return render_template("checkout.html")
 
-# @app.route("/log")
-# def log():
-#     return render_template("log.html")
-
-# @app.route("/plan")
-# def plan():
-#     return render_template("plan.html")
-
-@app.route("/emily.html")
-def emily():
-    return render_template("emily.html")
-
-@app.route("/jane.html")
-def jane():
-    return render_template("jane.html")
-
-@app.route("/john.html")
-def john():
-    return render_template("john.html")
-
-@app.route("/learnmore.html")
+@app.route("/learnmore")
 def learnmore():
     return render_template("learnmore.html")
 
-
-@app.route("/log.html")
-def log():
-    return render_template("log.html")
-
-@app.route("/ourcounclers.html")
-def ourcounclers():
-    return render_template("ourcounclers.html")
-
-@app.route("/plan.html")
-def plan():
-    return render_template("plan.html")
-
-@app.route("/signup.html")
-def signup():
-    return render_template("signup.html")
-
+# =========================
+# EMOTION PREDICTION API
+# =========================
 
 @app.route("/predict", methods=["POST"])
 def predict():
-    # Expecting JSON with a Base64 image string under key "image"
     data = request.json.get("image")
+
     if not data:
-        return jsonify({"error":"no image provided"}), 400
+        return jsonify({"error": "No image provided"}), 400
 
-    # Decode base64 image
-    image_data = base64.b64decode(data.split(",")[1])
-    img = Image.open(io.BytesIO(image_data)).convert("L").resize((48, 48))
+    try:
+        # Decode base64 image
+        image_data = base64.b64decode(data.split(",")[1])
+        img = Image.open(io.BytesIO(image_data)).convert("L")
+        img = img.resize((48, 48))
 
-    img_array = np.array(img) / 255.0
-    img_array = img_array.reshape(1, 48, 48, 1)
+        img_array = np.array(img) / 255.0
+        img_array = img_array.reshape(1, 48, 48, 1)
 
-    prediction = model.predict(img_array)
-    emotion_index = int(np.argmax(prediction))
-    emotion_label = EMOTIONS[emotion_index] if emotion_index < len(EMOTIONS) else f"#{emotion_index}"
+        prediction = model.predict(img_array)
+        emotion_index = int(np.argmax(prediction))
 
-    return jsonify({"emotion": emotion_label})
+        emotion = (
+            EMOTIONS[emotion_index]
+            if emotion_index < len(EMOTIONS)
+            else "Unknown"
+        )
+
+        return jsonify({"emotion": emotion})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+# =========================
+# EMOTION SUGGESTION API
+# =========================
+
+@app.route("/suggestion/<emotion>")
+def suggestion(emotion):
+    suggestions = {
+        "Happy": "Keep smiling 😊 Take a moment to appreciate something good today.",
+        "Sad": "It's okay to feel sad. Try taking 5 deep breaths and drink some water.",
+        "Angry": "Pause for a moment. Try counting from 1 to 10 slowly.",
+        "Fear": "You are safe right now. Focus on something you can see around you.",
+        "Surprise": "New moments can be exciting. Take a calm breath.",
+        "Neutral": "You seem calm. Maintain this balance with a short mindful break.",
+        "Disgust": "Take a slow breath and ground yourself.",
+        "Anxiety": "Try box breathing: inhale 4s, hold 4s, exhale 4s.",
+        "Boredom": "Stretch or take a short mindful pause.",
+        "Confusion": "Pause and focus on one thing at a time.",
+        "Frustration": "Relax your shoulders and take a deep breath."
+    }
+
+    return jsonify({
+        "suggestion": suggestions.get(
+            emotion,
+            "Take a short mindful break and be kind to yourself."
+        )
+    })
+
+# =========================
+# RUN APP
+# =========================
 
 if __name__ == "__main__":
-    # Use 0.0.0.0 if you plan to test from other devices on the same network
     app.run(host="127.0.0.1", port=5000, debug=True)

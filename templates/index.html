@@ -226,18 +226,18 @@
 
 <body>
 
-  <nav>
-        <div class="logo">Heal Minds</div>
-        <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="facecam.html">Facecam</a>
-          <a href="ourcounclers.html">Our Counselors</a>
-          <a href="log.html">Login</a>
-        </div>
-      </nav>
+ <nav>
+    <div class="logo">Heal Minds</div>
+    <div class="nav-links">
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('facecam') }}">Facecam</a>
+        <a href="{{ url_for('counselors') }}">Our Counselors</a>
+        <a href="{{ url_for('login') }}">Login</a>
+    </div>
+</nav>
 
-<a href="chat.html" class="robot-float" title="Chat with Heal-Bot">
-  
+<a href="{{ url_for('chat') }}" class="robot-float" title="Chat with Heal-Bot">
+
 </a>
 <h2 id="welcome-message"></h2>
 

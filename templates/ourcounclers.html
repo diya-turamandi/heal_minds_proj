@@ -74,10 +74,39 @@
   transform: translateY(-10px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
+nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #2874a6;
+      padding: 1rem 2rem;
+    }
+
+    nav .logo {
+      color: #fdfefe;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    nav .nav-links a {
+      color: #fdfefe;
+      text-decoration: none;
+      margin-left: 2rem;
+      font-size: 16px;
+    }
+
+    nav .nav-links a:hover {
+      text-decoration: underline;
+    }
 
     </style>
     <body>
-   
+    <nav>
+    <div class="logo">Heal Minds</div>
+    <div class="nav-links">
+      <a href="/">Home</a>
+    </div>
+  </nav>
     <section id="counselors">
         <h2>Meet Our Counselors</h2>
         <div class="counselor-cards">
