@@ -231,8 +231,6 @@
         <div class="nav-links">
             <a href="index.html">Home</a>
             <a href="facecam.html">Facecam</a>
-          <a href="howitworks.html">How It Works</a>
-          <a href="plan.html">Plans & Pricing</a>
           <a href="ourcounclers.html">Our Counselors</a>
           <a href="log.html">Login</a>
         </div>
@@ -241,6 +239,7 @@
 <a href="chat.html" class="robot-float" title="Chat with Heal-Bot">
   
 </a>
+<h2 id="welcome-message"></h2>
 
   <section class="hero">
     <h1>Welcome to Heal Minds</h1>
@@ -296,6 +295,17 @@
       alert("Thank you for sharing! You're feeling " + mood + ". We're here for you 💙");
     }
   </script>
+<script>
+  window.onload = function () {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const userName = localStorage.getItem("userName");
+
+    if (isLoggedIn === "true" && userName) {
+      document.getElementById("welcome-message").textContent =
+        "Welcome " + userName + " to Heal Minds 💙";
+    }
+  };
+</script>
 
 </body>
 

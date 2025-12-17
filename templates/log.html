@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login - Heal Minds</title>
+
   <style>
     * {
       margin: 0;
@@ -104,30 +105,35 @@
     }
   </style>
 </head>
+
 <body>
 
+  <!-- NAV BAR -->
   <nav>
-        <div class="logo">Heal Minds</div>
-        <div class="nav-links">
-            <a href="index.html">Home</a>
-          <a href="howitworks.html">How It Works</a>
-          <a href="plan.html">Plans & Pricing</a>
-          <a href="ourcounclers.html">Our Counselors</a>
-          <a href="log.html">Login</a>
-        </div>
-      </nav>
+    <div class="logo">Heal Minds</div>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/howitworks">How It Works</a>
+      <a href="/plan">Plans & Pricing</a>
+      <a href="/ourcounclers">Our Counselors</a>
+      <a href="/login">Login</a>
+    </div>
+  </nav>
 
+  <!-- LOGIN SECTION -->
   <section id="login">
     <h2>Login</h2>
+
     <form id="login-form">
       <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required>
+      <input type="email" id="email" required>
 
       <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required>
+      <input type="password" id="password" required>
 
       <button type="submit" class="cta-button">Login</button>
       <a class="signup-link" href="signup.html">Don't have an account? Sign up</a>
+
     </form>
   </section>
 
@@ -138,12 +144,19 @@
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
 
+      // Load stored data
       const storedEmail = localStorage.getItem("userEmail");
       const storedPassword = localStorage.getItem("userPassword");
 
       if (email === storedEmail && password === storedPassword) {
+
+        // Save login session
+        localStorage.setItem("isLoggedIn", "true");
+
         alert("Login successful!");
-        window.location.href = "index.html";
+
+        // Correct redirect for Flask
+        window.location.href = "/";
       } else {
         alert("Invalid email or password.");
       }
