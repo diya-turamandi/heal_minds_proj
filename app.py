@@ -37,7 +37,15 @@ def counselors():
 @app.route("/chat")
 def chat():
     return render_template("chat.html")
-
+@app.route("/jane")
+def jane():
+    return render_template("jane.html")
+@app.route("/emily")
+def emily():
+    return render_template("emily.html")    
+@app.route("/john")
+def john():
+    return render_template("john.html") 
 
 # =========================
 # TEMP PREDICTION (RANDOM)
